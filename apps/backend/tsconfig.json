@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    "types": ["node"]
+  },
+  "include": ["src"],
+  "exclude": ["dist"],
+
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
+}
