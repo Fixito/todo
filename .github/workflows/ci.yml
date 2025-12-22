@@ -29,6 +29,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Prisma client
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/dummy
+        run: pnpm --filter backend prisma:generate
+
       - name: Lint (Biome)
         uses: biomejs/setup-biome@v2
         with:
