@@ -2,13 +2,13 @@ services:
 
   db:
     image: postgres:16-alpine
-    restart: unless-stopped
+    restart: always
     # set shared memory limit when using docker compose
     shm_size: 128mb
-    ports:
-      - 5432:5432
     env_file:
       - ../../.env
+    ports:
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
