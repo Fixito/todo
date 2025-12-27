@@ -1,16 +1,29 @@
+import { resolve } from 'node:path';
 import process from 'node:process';
 
 import { config } from 'dotenv';
 import z from 'zod';
 
-config();
-
-const EnvSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  PORT: z.coerce.number().default(5000),
-  LOG_LEVEL: z.enum(['debug', 'error', 'fatal', 'info', 'silent', 'trace', 'warn']).default('info'),
-  DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+config({
+  path: resolve(process.cwd(), '../../.env'),
 });
+
+const EnvSchema = z
+  .object({
+    NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+    PORT: z.coerce.number().default(5000),
+    LOG_LEVEL: z
+      .enum(['debug', 'error', 'fatal', 'info', 'silent', 'trace', 'warn'])
+      .default('info'),
+    DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+    API_PREFIX: z.string().default('/api/v1'),
+  })
+  .transform((data) => ({
+    ...data,
+    api: {
+      prefix: data.API_PREFIX,
+    },
+  }));
 
 export type Env = z.infer<typeof EnvSchema>;
 
