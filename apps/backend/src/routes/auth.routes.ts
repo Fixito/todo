@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+import { setAuthCookie } from '@/lib/cookies.js';
 import { validate } from '@/middlewares/validate.js';
 import { type RegisterInput, registerSchema } from '@/schemas/auth.schema.js';
 import AuthService from '@/services/auth.service.js';
@@ -14,7 +15,9 @@ export default (app: Router) => {
     const authServiceInstance = new AuthService();
     const { user, token } = await authServiceInstance.register(req.body as RegisterInput);
 
-    res.status(StatusCodes.CREATED).json({ user, token });
+    setAuthCookie(res, token);
+
+    res.status(StatusCodes.CREATED).json({ user });
   });
 
   route.post('/login', (_req, res) => {

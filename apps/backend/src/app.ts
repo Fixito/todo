@@ -1,7 +1,8 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 
-import config from './config/env.js';
+import { default as config, default as env } from './config/env.js';
 
 import { errorHandler } from './middlewares/error-handler.js';
 import { httpLogger } from './middlewares/http-logger.js';
@@ -16,6 +17,7 @@ export function createApp() {
     res.status(200).json({ status: 'OK' });
   });
 
+  app.use(cookieParser(env.COOKIE_SECRET));
   app.use(cors());
   app.use(express.json());
   app.use(httpLogger);

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import env from '@/config/env.js';
 
-interface JwtPayload {
+export interface JwtPayload {
   id: string;
   email: string;
 }
