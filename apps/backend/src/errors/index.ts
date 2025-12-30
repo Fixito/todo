@@ -1,11 +1,20 @@
 import { StatusCodes } from 'http-status-codes';
 
 export class HttpError extends Error {
-  statusCode: number;
+  public readonly statusCode: number;
+  public readonly isOperational = true;
 
   constructor(message: string, statusCode: number = StatusCodes.INTERNAL_SERVER_ERROR) {
     super(message);
     this.statusCode = statusCode;
     this.name = new.target.name;
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class EmailAlreadyExistsError extends HttpError {
+  constructor() {
+    super('Email already in use', StatusCodes.CONFLICT);
   }
 }

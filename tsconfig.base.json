@@ -22,7 +22,7 @@
     /* Path Mapping */
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["packages/shared/*"]
+      "@shared/*": ["packages/shared/dist/*"]
     }
   }
 }

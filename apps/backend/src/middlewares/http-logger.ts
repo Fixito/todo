@@ -5,11 +5,12 @@ import { logger } from '@/config/logger.js';
 export const httpLogger = pinoHttp({
   logger,
 
+  autoLogging: {
+    ignore: (req) => req.url === '/health',
+  },
+
   customLogLevel: (_req, res, err) => {
-    // Errors are logged explicitly in error-handler middleware
-    if (res.statusCode >= 500 || err) return 'silent';
-    if (res.statusCode >= 400) return 'warn';
-    if (res.statusCode >= 300) return 'silent';
+    if (err || res.statusCode >= 400) return 'silent';
     return 'info';
   },
 

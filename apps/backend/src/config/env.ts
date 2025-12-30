@@ -17,6 +17,7 @@ const EnvSchema = z
       .default('info'),
     DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
     API_PREFIX: z.string().default('/api/v1'),
+    JWT_SECRET: z.string().min(1, 'JWT_SECRET is required'),
   })
   .transform((data) => ({
     ...data,

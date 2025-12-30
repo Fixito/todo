@@ -4,6 +4,7 @@
   "description": "A todo task manager with user authentication.",
   "type": "module",
   "scripts": {
+    "dev:shared": "pnpm --filter @todo/shared dev",
     "dev:backend": "pnpm --filter backend dev",
     "dev:frontend": "pnpm --filter frontend dev",
     "build:backend": "pnpm --filter backend build",

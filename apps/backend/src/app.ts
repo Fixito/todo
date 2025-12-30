@@ -3,9 +3,9 @@ import express from 'express';
 
 import config from './config/env.js';
 
-import { errorHandler } from './middleware/error-handler.js';
-import { httpLogger } from './middleware/http-logger.js';
-import { notFound } from './middleware/not-found.js';
+import { errorHandler } from './middlewares/error-handler.js';
+import { httpLogger } from './middlewares/http-logger.js';
+import { notFound } from './middlewares/not-found.js';
 
 import routes from './routes/index.js';
 
