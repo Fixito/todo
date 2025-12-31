@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+import { authService } from '@/lib/container.js';
 import { setAuthCookie } from '@/lib/cookies.js';
+
 import { validate } from '@/middlewares/validate.js';
+
 import { type RegisterInput, registerSchema } from '@/schemas/auth.schema.js';
-import AuthService from '@/services/auth.service.js';
 
 const route = Router();
 
@@ -12,8 +14,7 @@ export default (app: Router) => {
   app.use('/auth', route);
 
   route.post('/register', validate(registerSchema), async (req, res) => {
-    const authServiceInstance = new AuthService();
-    const { user, token } = await authServiceInstance.register(req.body as RegisterInput);
+    const { user, token } = await authService.register(req.body as RegisterInput);
 
     setAuthCookie(res, token);
 
