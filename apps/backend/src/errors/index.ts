@@ -18,3 +18,9 @@ export class EmailAlreadyExistsError extends HttpError {
     super('Email already in use', StatusCodes.CONFLICT);
   }
 }
+
+export class InvalidCredentialsError extends HttpError {
+  constructor() {
+    super('Invalid credentials', StatusCodes.UNAUTHORIZED);
+  }
+}

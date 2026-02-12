@@ -2,11 +2,16 @@ import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import { authService } from '@/lib/container.js';
-import { setAuthCookie } from '@/lib/cookies.js';
+import { clearAuthCookie, setAuthCookie } from '@/lib/cookies.js';
 
 import { validate } from '@/middlewares/validate.js';
 
-import { type RegisterInput, registerSchema } from '@/schemas/auth.schema.js';
+import {
+  type LoginInput,
+  loginSchema,
+  type RegisterInput,
+  registerSchema,
+} from '@/schemas/auth.schema.js';
 
 const route = Router();
 
@@ -21,11 +26,16 @@ export default (app: Router) => {
     res.status(StatusCodes.CREATED).json({ user });
   });
 
-  route.post('/login', (_req, res) => {
-    res.status(200).json({ message: 'Login successful' });
+  route.post('/login', validate(loginSchema), async (req, res) => {
+    const { user, token } = await authService.login(req.body as LoginInput);
+
+    setAuthCookie(res, token);
+
+    res.status(StatusCodes.OK).json({ user });
   });
 
   route.post('/logout', (_req, res) => {
-    res.status(200).json({ message: 'Logout successful' });
+    clearAuthCookie(res);
+    res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
   });
 };
