@@ -2,7 +2,6 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
 
     /* Path Mapping */
     "baseUrl": ".",
@@ -10,10 +9,10 @@
       "@/*": ["src/*"]
     },
 
-    "types": ["node"]
+    "types": ["node", "vitest/globals"]
   },
-  "include": ["src"],
-  "exclude": ["dist"],
+  "include": ["src", "tests"],
+  "exclude": ["dist", "node_modules"],
 
   "tsc-alias": {
     "resolveFullPaths": true

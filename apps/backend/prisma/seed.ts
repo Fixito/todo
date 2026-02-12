@@ -8,7 +8,7 @@ async function main() {
   // Create a test user with todos
   const user = await prisma.user.create({
     data: {
-      email: 'test-user@todo.dev',
+      email: 'john.doe@prisma.io',
       password,
       todos: {
         create: [
