@@ -9,6 +9,7 @@
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
     "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
     "test": "cross-env NODE_ENV=test vitest",
     "db:test:setup": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5432/todo_test prisma migrate deploy",
     "test:db": "pnpm db:test:setup && pnpm test"
