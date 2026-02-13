@@ -24,3 +24,9 @@ export class InvalidCredentialsError extends HttpError {
     super('Invalid credentials', StatusCodes.UNAUTHORIZED);
   }
 }
+
+export class UnauthorizedError extends HttpError {
+  constructor() {
+    super('Unauthorized', StatusCodes.UNAUTHORIZED);
+  }
+}

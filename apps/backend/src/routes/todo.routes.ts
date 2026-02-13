@@ -1,12 +1,24 @@
 import { Router } from 'express';
 
+import { UnauthorizedError } from '@/errors/index.js';
+
+import { todoService } from '@/lib/container.js';
+
+import { requireAuth } from '@/middlewares/authenticate.js';
+
 const route = Router();
 
 export default (app: Router) => {
   app.use('/todos', route);
 
-  route.get('/', (_req, res) => {
-    res.json({ message: 'Get all todos' });
+  route.get('/', requireAuth, async (req, res) => {
+    if (!req.user) {
+      throw new UnauthorizedError();
+    }
+
+    const todos = await todoService.getUserTodos(req.user.id);
+
+    res.json({ todos });
   });
 
   route.post('/', (req, res) => {

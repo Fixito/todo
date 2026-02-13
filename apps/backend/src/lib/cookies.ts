@@ -10,7 +10,7 @@ const COOKIE_OPTIONS = {
 };
 
 export function setAuthCookie(res: Response, token: string) {
-  res.cookie('token', JSON.stringify(token), { ...COOKIE_OPTIONS, signed: true });
+  res.cookie('token', token, { ...COOKIE_OPTIONS, signed: true });
 }
 
 export function getAuthCookie(req: Request) {
