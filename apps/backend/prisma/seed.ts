@@ -5,7 +5,6 @@ import { prisma } from '../src/lib/prisma.js';
 async function main() {
   const password = await bcrypt.hash('secret123', 10);
 
-  // Create a test user with todos
   const user = await prisma.user.create({
     data: {
       email: 'john.doe@prisma.io',
