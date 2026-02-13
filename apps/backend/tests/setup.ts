@@ -7,11 +7,7 @@ config({
   path: resolve(process.cwd(), '../../.env'),
 });
 
-process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
-
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL_TEST is not defined');
-}
+process.env.NODE_ENV = 'test';
 
 import { prisma } from '../src/lib/prisma.js';
 

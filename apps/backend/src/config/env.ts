@@ -16,16 +16,25 @@ const EnvSchema = z
       .enum(['debug', 'error', 'fatal', 'info', 'silent', 'trace', 'warn'])
       .default('info'),
     DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+    DATABASE_URL_TEST: z.string().optional(),
     API_PREFIX: z.string().default('/api/v1'),
     JWT_SECRET: z.string().min(1, 'JWT_SECRET is required'),
     COOKIE_SECRET: z.string().min(1, 'COOKIE_SECRET is required'),
   })
-  .transform((data) => ({
-    ...data,
-    api: {
-      prefix: data.API_PREFIX,
-    },
-  }));
+  .transform((data) => {
+    const databaseUrl =
+      data.NODE_ENV === 'test' && data.DATABASE_URL_TEST
+        ? data.DATABASE_URL_TEST
+        : data.DATABASE_URL;
+
+    return {
+      ...data,
+      DATABASE_URL: databaseUrl,
+      api: {
+        prefix: data.API_PREFIX,
+      },
+    };
+  });
 
 export type Env = z.infer<typeof EnvSchema>;
 
