@@ -2,7 +2,7 @@ import type { Express } from 'express';
 import request from 'supertest';
 
 // biome-ignore lint/style/noProcessEnv: needed for test configuration
-const prefix = process.env.API_PREFIX ?? '/api/v1';
+export const prefix = process.env.API_PREFIX ?? '/api/v1';
 
 interface UserCredentials {
   email: string;
