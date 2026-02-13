@@ -63,6 +63,38 @@ jobs:
 
       - name: Type check
         run: pnpm typecheck
+        run: pnpm lint
+
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/dummy
+        run: pnpm --filter backend prisma:generate
+
+      - name: Type check
+        run: pnpm typecheck
 
   test:
     name: Test Backend
@@ -145,7 +177,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate Prisma client
+      - name: Build all packages
         env:
           DATABASE_URL: postgresql://user:password@localhost:5432/dummy
         run: pnpm --filter backend prisma:generate
