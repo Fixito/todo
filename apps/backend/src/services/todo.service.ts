@@ -11,4 +11,23 @@ export default class TodoService {
 
     return todos;
   }
+
+  async createTodo(userId: string, text: string) {
+    const maxPosition = await this.prisma.todo.aggregate({
+      where: { userId },
+      _max: { position: true },
+    });
+
+    const newPosition = (maxPosition._max.position ?? 0) + 1;
+
+    const todo = await this.prisma.todo.create({
+      data: {
+        text,
+        userId,
+        position: newPosition,
+      },
+    });
+
+    return todo;
+  }
 }

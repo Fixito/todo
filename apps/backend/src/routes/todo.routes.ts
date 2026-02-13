@@ -5,6 +5,9 @@ import { UnauthorizedError } from '@/errors/index.js';
 import { todoService } from '@/lib/container.js';
 
 import { requireAuth } from '@/middlewares/authenticate.js';
+import { validate } from '@/middlewares/validate.js';
+
+import { todoSchema } from '@/schemas/todo.schema.js';
 
 const route = Router();
 
@@ -21,8 +24,14 @@ export default (app: Router) => {
     res.json({ todos });
   });
 
-  route.post('/', (req, res) => {
-    res.json({ message: 'Create a new todo', data: req.body });
+  route.post('/', requireAuth, validate(todoSchema), async (req, res) => {
+    if (!req.user) {
+      throw new UnauthorizedError();
+    }
+
+    const todo = await todoService.createTodo(req.user.id, req.body.text);
+
+    res.json({ todo });
   });
 
   route.get('/:id', (req, res) => {
