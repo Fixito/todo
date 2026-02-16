@@ -8,5 +8,12 @@ declare global {
         email: string;
       };
     }
+
+    interface AuthenticatedRequest extends Request {
+      user: {
+        id: string;
+        email: string;
+      };
+    }
   }
 }

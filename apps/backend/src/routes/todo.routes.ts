@@ -1,6 +1,5 @@
 import { Router } from 'express';
-
-import { UnauthorizedError } from '@/errors/index.js';
+import { StatusCodes } from 'http-status-codes';
 
 import { todoService } from '@/lib/container.js';
 
@@ -15,23 +14,17 @@ export default (app: Router) => {
   app.use('/todos', route);
 
   route.get('/', requireAuth, async (req, res) => {
-    if (!req.user) {
-      throw new UnauthorizedError();
-    }
+    const { user } = req as Express.AuthenticatedRequest;
+    const todos = await todoService.getUserTodos(user.id);
 
-    const todos = await todoService.getUserTodos(req.user.id);
-
-    res.json({ todos });
+    res.status(StatusCodes.OK).json({ todos });
   });
 
   route.post('/', requireAuth, validate(todoSchema), async (req, res) => {
-    if (!req.user) {
-      throw new UnauthorizedError();
-    }
+    const { user } = req as Express.AuthenticatedRequest;
+    const todo = await todoService.createTodo(user.id, req.body.text);
 
-    const todo = await todoService.createTodo(req.user.id, req.body.text);
-
-    res.json({ todo });
+    res.status(StatusCodes.CREATED).json({ todo });
   });
 
   route.get('/:id', (req, res) => {

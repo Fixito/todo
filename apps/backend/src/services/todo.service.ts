@@ -18,7 +18,7 @@ export default class TodoService {
       _max: { position: true },
     });
 
-    const newPosition = (maxPosition._max.position ?? 0) + 1;
+    const newPosition = (maxPosition._max.position ?? -1) + 1;
 
     const todo = await this.prisma.todo.create({
       data: {
