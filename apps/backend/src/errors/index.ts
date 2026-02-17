@@ -30,3 +30,15 @@ export class UnauthorizedError extends HttpError {
     super('Unauthorized', StatusCodes.UNAUTHORIZED);
   }
 }
+
+export class NotFoundError extends HttpError {
+  constructor() {
+    super('Todo not found', StatusCodes.NOT_FOUND);
+  }
+}
+
+export class ForbiddenError extends HttpError {
+  constructor() {
+    super('Forbidden', StatusCodes.FORBIDDEN);
+  }
+}

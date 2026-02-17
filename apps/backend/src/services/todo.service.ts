@@ -1,3 +1,5 @@
+import { ForbiddenError, NotFoundError } from '@/errors/index.js';
+
 import type { PrismaClient } from '@/generated/prisma/client.js';
 
 export default class TodoService {
@@ -29,5 +31,23 @@ export default class TodoService {
     });
 
     return todo;
+  }
+
+  async deleteTodo(userId: string, todoId: string) {
+    const todo = await this.prisma.todo.findUnique({
+      where: { id: todoId },
+    });
+
+    if (!todo) {
+      throw new NotFoundError();
+    }
+
+    if (todo.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    await this.prisma.todo.delete({
+      where: { id: todoId },
+    });
   }
 }

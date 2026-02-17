@@ -76,3 +76,60 @@ describe('POST /todos', () => {
     expect(res.body.errors[0].field).toBe('text');
   });
 });
+
+describe('DELETE /todos/:id', () => {
+  it('should require authentication', async () => {
+    await request(app).delete(`${prefix}/todos/fake-id`).expect(401);
+  });
+
+  it('should return 400 for invalid todo id', async () => {
+    const { cookie } = await createAuthenticatedUser(app);
+
+    await request(app).delete(`${prefix}/todos/invalid-id`).set('Cookie', cookie).expect(400);
+  });
+
+  it('should delete the todo from the database', async () => {
+    const { cookie } = await createAuthenticatedUser(app);
+
+    const createRes = await request(app)
+      .post(`${prefix}/todos`)
+      .set('Cookie', cookie)
+      .send({ text: 'Test todo' })
+      .expect(201);
+
+    const todoId = createRes.body.todo.id;
+
+    await request(app).delete(`${prefix}/todos/${todoId}`).set('Cookie', cookie).expect(200);
+
+    const todosRes = await request(app).get(`${prefix}/todos`).set('Cookie', cookie).expect(200);
+
+    expect(todosRes.body.todos).toHaveLength(0);
+  });
+
+  it("should not allow deleting another user's todo", async () => {
+    const { cookie } = await createAuthenticatedUser(app);
+    const todoRes = await request(app)
+      .post(`${prefix}/todos`)
+      .set('Cookie', cookie)
+      .send({ text: 'User 1 todo' })
+      .expect(201);
+
+    const todoId = todoRes.body.todo.id;
+
+    const { cookie: cookie2 } = await createAuthenticatedUser(app, {
+      email: 'user2@test.com',
+      password: 'password',
+    });
+
+    await request(app).delete(`${prefix}/todos/${todoId}`).set('Cookie', cookie2).expect(403);
+  });
+
+  it('should return 404 when deleting non-existent todo', async () => {
+    const { cookie } = await createAuthenticatedUser(app);
+
+    await request(app)
+      .delete(`${prefix}/todos/clhqxq9yj0000qz0ghwvw86e7`)
+      .set('Cookie', cookie)
+      .expect(404);
+  });
+});
