@@ -9,9 +9,7 @@ const prefix = process.env.API_PREFIX ?? '/api/v1';
 
 describe('POST /auth/logout', () => {
   it('should clear auth cookie on logout', async () => {
-    const res = await request(app).post(`${prefix}/auth/logout`).expect(200);
-
-    expect(res.body.message).toBe('Logged out successfully');
+    const res = await request(app).post(`${prefix}/auth/logout`).expect(204);
 
     const cookies = res.headers['set-cookie'];
 

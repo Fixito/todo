@@ -16,7 +16,9 @@ describe('POST /auth/register', () => {
 
     const res = await createUser(app, validUser).expect(409);
 
-    expect(res.body.message).toBe('Email already in use');
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('CONFLICT');
+    expect(res.body.error.message).toBe('Email already in use');
   });
 
   it('should reject invalid payload', async () => {

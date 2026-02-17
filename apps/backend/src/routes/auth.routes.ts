@@ -36,6 +36,6 @@ export default (app: Router) => {
 
   route.post('/logout', (_req, res) => {
     clearAuthCookie(res);
-    res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
+    res.status(StatusCodes.NO_CONTENT).send();
   });
 };

@@ -72,8 +72,10 @@ describe('POST /todos', () => {
       .send({ text: '' })
       .expect(400);
 
-    expect(res.body.errors).toBeDefined();
-    expect(res.body.errors[0].field).toBe('text');
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('VALIDATION_ERROR');
+    expect(res.body.error.details).toBeDefined();
+    expect(res.body.error.details[0].field).toBe('text');
   });
 });
 
@@ -109,7 +111,9 @@ describe('PATCH /todos/:id', () => {
       .send({ text: '' })
       .expect(400);
 
-    expect(res.body.errors).toBeDefined();
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('VALIDATION_ERROR');
+    expect(res.body.error.details).toBeDefined();
   });
 
   it('should update the todo', async () => {
@@ -247,7 +251,9 @@ describe('PATCH /todos/:id', () => {
       .send({})
       .expect(400);
 
-    expect(res.body.errors).toBeDefined();
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('VALIDATION_ERROR');
+    expect(res.body.error.details).toBeDefined();
   });
 
   it('should reject negative position', async () => {
@@ -267,7 +273,9 @@ describe('PATCH /todos/:id', () => {
       .send({ position: -1 })
       .expect(400);
 
-    expect(res.body.errors).toBeDefined();
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('VALIDATION_ERROR');
+    expect(res.body.error.details).toBeDefined();
   });
 });
 

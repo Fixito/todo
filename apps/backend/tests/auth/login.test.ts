@@ -25,7 +25,9 @@ describe('POST /auth/login', () => {
       password: 'bad-password',
     }).expect(401);
 
-    expect(res.body.message).toBe('Invalid credentials');
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('UNAUTHORIZED');
+    expect(res.body.error.message).toBe('Invalid credentials');
   });
 
   it('should reject non existing email', async () => {
@@ -34,6 +36,8 @@ describe('POST /auth/login', () => {
       password: 'some-password',
     }).expect(401);
 
-    expect(res.body.message).toBe('Invalid credentials');
+    expect(res.body.error).toBeDefined();
+    expect(res.body.error.code).toBe('UNAUTHORIZED');
+    expect(res.body.error.message).toBe('Invalid credentials');
   });
 });
