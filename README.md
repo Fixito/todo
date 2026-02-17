@@ -8,8 +8,8 @@ A full-stack todo application built with TypeScript, Express, React, and Postgre
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🛠 Tech Stack](#-tech-stack)
-  - [� API Endpoints](#-api-endpoints)
-  - [�📁 Project Structure](#-project-structure)
+  - [📡 API Documentation](#-api-documentation)
+  - [📁 Project Structure](#-project-structure)
   - [🚀 Getting Started](#-getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -61,22 +61,22 @@ A full-stack todo application built with TypeScript, Express, React, and Postgre
 - Biome (linting & formatting)
 - Husky (git hooks)
 
-## � API Endpoints
+## 📡 API Documentation
 
-**Authentication:**
-- `POST /api/auth/register` - Create a new user account
-- `POST /api/auth/login` - Login with email and password
-- `POST /api/auth/logout` - Logout and clear auth cookie
+The API provides authentication and todo management endpoints. Authentication uses JWT tokens stored in HTTP-only cookies for security.
 
-**Todos (requires authentication):**
-- `GET /api/todos` - Get all todos for authenticated user
-- `POST /api/todos` - Create a new todo
-- `PATCH /api/todos/:id` - Update a todo (text, position, or completed status)
-- `DELETE /api/todos/:id` - Delete a todo
+**Quick Overview:**
+- `POST /api/v1/auth/register` - Create a new user account
+- `POST /api/v1/auth/login` - Login with email and password
+- `POST /api/v1/auth/logout` - Logout and clear auth cookie
+- `GET /api/v1/todos` - Get all todos (requires auth)
+- `POST /api/v1/todos` - Create a new todo (requires auth)
+- `PATCH /api/v1/todos/:id` - Update a todo (requires auth)
+- `DELETE /api/v1/todos/:id` - Delete a todo (requires auth)
 
-> **Note:** All authenticated endpoints require a valid JWT token stored in an HTTP-only cookie.
+📖 **[Full API Documentation](apps/backend/docs/API.md)** - Complete reference with request/response schemas and curl examples
 
-## �📁 Project Structure
+## 📁 Project Structure
 
 ```
 todo/
