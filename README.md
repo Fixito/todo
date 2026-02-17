@@ -8,7 +8,8 @@ A full-stack todo application built with TypeScript, Express, React, and Postgre
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🛠 Tech Stack](#-tech-stack)
-  - [📁 Project Structure](#-project-structure)
+  - [� API Endpoints](#-api-endpoints)
+  - [�📁 Project Structure](#-project-structure)
   - [🚀 Getting Started](#-getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -24,16 +25,18 @@ A full-stack todo application built with TypeScript, Express, React, and Postgre
 
 ## ✨ Features
 
-**Currently Implemented (v0.1 - Auth Phase):**
-- ✅ User registration with JWT (HTTP-only cookies)
+**Currently Implemented (Backend v1.0):**
+- ✅ User registration and authentication with JWT (HTTP-only cookies)
+- ✅ User login and logout
 - ✅ Secure password hashing with bcrypt
+- ✅ Complete CRUD operations for todos
+- ✅ Todo positioning and ordering
+- ✅ User-scoped todos with authorization checks
 - ✅ Type-safe API with TypeScript
 - ✅ PostgreSQL database with Prisma ORM
-- ✅ Test infrastructure with Vitest
+- ✅ Comprehensive test coverage with Vitest
 
 **Planned Features:**
-- 🚧 User login and logout
-- 🚧 Create, read, update, and delete todos
 - 🚧 Todo filtering and sorting
 - 🚧 Frontend with React + TanStack Router
 
@@ -58,7 +61,22 @@ A full-stack todo application built with TypeScript, Express, React, and Postgre
 - Biome (linting & formatting)
 - Husky (git hooks)
 
-## 📁 Project Structure
+## � API Endpoints
+
+**Authentication:**
+- `POST /api/auth/register` - Create a new user account
+- `POST /api/auth/login` - Login with email and password
+- `POST /api/auth/logout` - Logout and clear auth cookie
+
+**Todos (requires authentication):**
+- `GET /api/todos` - Get all todos for authenticated user
+- `POST /api/todos` - Create a new todo
+- `PATCH /api/todos/:id` - Update a todo (text, position, or completed status)
+- `DELETE /api/todos/:id` - Delete a todo
+
+> **Note:** All authenticated endpoints require a valid JWT token stored in an HTTP-only cookie.
+
+## �📁 Project Structure
 
 ```
 todo/
