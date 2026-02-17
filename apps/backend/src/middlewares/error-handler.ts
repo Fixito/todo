@@ -17,6 +17,7 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
         field: e.path.join('.'),
         message: e.message,
       })),
+      ...(env.NODE_ENV === 'development' && { stack: err.stack }),
     });
   }
 
@@ -25,8 +26,8 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
   req.log.error({ err, statusCode }, err.message);
 
   return res.status(statusCode).json({
-    error: err.name,
+    status: 'error',
     message: err.message,
-    stack: env.NODE_ENV === 'development' ? err.stack : undefined,
+    ...(env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 }

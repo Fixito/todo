@@ -32,8 +32,8 @@ export class UnauthorizedError extends HttpError {
 }
 
 export class NotFoundError extends HttpError {
-  constructor() {
-    super('Todo not found', StatusCodes.NOT_FOUND);
+  constructor(resource = 'Resource') {
+    super(`${resource} not found`, StatusCodes.NOT_FOUND);
   }
 }
 

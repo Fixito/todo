@@ -9,8 +9,7 @@ export function validate(schema: z.ZodType, source: 'body' | 'query' | 'params' 
       return next(result.error);
     }
 
-    const data = result.data as Record<'body' | 'query' | 'params', unknown>;
-    req[source] = data;
+    req[source] = result.data;
 
     next();
   };

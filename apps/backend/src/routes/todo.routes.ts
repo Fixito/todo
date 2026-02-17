@@ -8,20 +8,25 @@ import { validate } from '@/middlewares/validate.js';
 
 import { todoParamsSchema, todoSchema, updateTodoSchema } from '@/schemas/todo.schema.js';
 
+function getAuthenticatedUser(req: Express.Request): { id: string; email: string } {
+  const authReq = req as Express.AuthenticatedRequest;
+  return authReq.user;
+}
+
 const route = Router();
 
 export default (app: Router) => {
   app.use('/todos', route);
 
   route.get('/', requireAuth, async (req, res) => {
-    const { user } = req as Express.AuthenticatedRequest;
+    const user = getAuthenticatedUser(req);
     const todos = await todoService.getUserTodos(user.id);
 
     res.status(StatusCodes.OK).json({ todos });
   });
 
   route.post('/', requireAuth, validate(todoSchema), async (req, res) => {
-    const { user } = req as Express.AuthenticatedRequest;
+    const user = getAuthenticatedUser(req);
     const todo = await todoService.createTodo(user.id, req.body.text);
 
     res.status(StatusCodes.CREATED).json({ todo });
@@ -33,7 +38,7 @@ export default (app: Router) => {
     validate(todoParamsSchema, 'params'),
     validate(updateTodoSchema),
     async (req, res) => {
-      const { user } = req as Express.AuthenticatedRequest;
+      const user = getAuthenticatedUser(req);
       const { id } = req.params as { id: string };
 
       const todo = await todoService.updateTodo(user.id, id, req.body);
@@ -43,11 +48,11 @@ export default (app: Router) => {
   );
 
   route.delete('/:id', requireAuth, validate(todoParamsSchema, 'params'), async (req, res) => {
-    const { user } = req as Express.AuthenticatedRequest;
+    const user = getAuthenticatedUser(req);
     const { id } = req.params as { id: string };
 
     await todoService.deleteTodo(user.id, id);
 
-    res.status(StatusCodes.OK).json({ message: `Delete todo with id ${id}` });
+    res.status(StatusCodes.NO_CONTENT).send();
   });
 };

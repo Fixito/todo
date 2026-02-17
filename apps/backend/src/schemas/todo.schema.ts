@@ -1,7 +1,10 @@
 import z from 'zod';
 
 export const todoSchema = z.object({
-  text: z.string().min(1, 'Text must be at least 1 character long'),
+  text: z
+    .string()
+    .min(1, 'Text must be at least 1 character long')
+    .max(500, 'Text must not exceed 500 characters'),
 });
 
 export const todoParamsSchema = z.object({
@@ -10,7 +13,7 @@ export const todoParamsSchema = z.object({
 
 export const updateTodoSchema = z
   .object({
-    text: z.string().min(1).optional(),
+    text: z.string().min(1).max(500).optional(),
     position: z.number().int().min(0).optional(),
     completed: z.boolean().optional(),
   })

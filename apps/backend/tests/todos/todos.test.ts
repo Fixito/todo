@@ -293,7 +293,7 @@ describe('DELETE /todos/:id', () => {
 
     const todoId = createRes.body.todo.id;
 
-    await request(app).delete(`${prefix}/todos/${todoId}`).set('Cookie', cookie).expect(200);
+    await request(app).delete(`${prefix}/todos/${todoId}`).set('Cookie', cookie).expect(204);
 
     const todosRes = await request(app).get(`${prefix}/todos`).set('Cookie', cookie).expect(200);
 

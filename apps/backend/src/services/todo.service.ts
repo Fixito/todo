@@ -16,19 +16,21 @@ export default class TodoService {
   }
 
   async createTodo(userId: string, text: string) {
-    const maxPosition = await this.prisma.todo.aggregate({
-      where: { userId },
-      _max: { position: true },
-    });
+    const todo = await this.prisma.$transaction(async (tx) => {
+      const maxPosition = await tx.todo.aggregate({
+        where: { userId },
+        _max: { position: true },
+      });
 
-    const newPosition = (maxPosition._max.position ?? -1) + 1;
+      const newPosition = (maxPosition._max.position ?? -1) + 1;
 
-    const todo = await this.prisma.todo.create({
-      data: {
-        text,
-        userId,
-        position: newPosition,
-      },
+      return await tx.todo.create({
+        data: {
+          text,
+          userId,
+          position: newPosition,
+        },
+      });
     });
 
     return todo;
@@ -40,7 +42,7 @@ export default class TodoService {
     });
 
     if (!todo) {
-      throw new NotFoundError();
+      throw new NotFoundError('Todo');
     }
 
     if (todo.userId !== userId) {
@@ -61,7 +63,7 @@ export default class TodoService {
     });
 
     if (!todo) {
-      throw new NotFoundError();
+      throw new NotFoundError('Todo');
     }
 
     if (todo.userId !== userId) {
