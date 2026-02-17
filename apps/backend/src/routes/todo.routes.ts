@@ -27,7 +27,7 @@ export default (app: Router) => {
 
   route.post('/', requireAuth, validate(todoSchema), async (req, res) => {
     const user = getAuthenticatedUser(req);
-    const todo = await todoService.createTodo(user.id, req.body.text);
+    const todo = await todoService.createTodo(user.id, req.body);
 
     res.status(StatusCodes.CREATED).json({ todo });
   });

@@ -1,7 +1,7 @@
 import { ForbiddenError, NotFoundError } from '@/errors/index.js';
 
 import type { PrismaClient } from '@/generated/prisma/client.js';
-import type { UpdateTodoInput } from '@/schemas/todo.schema.js';
+import type { CreateTodoInput, UpdateTodoInput } from '@/schemas/todo.schema.js';
 
 export default class TodoService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -15,7 +15,7 @@ export default class TodoService {
     return todos;
   }
 
-  async createTodo(userId: string, text: string) {
+  async createTodo(userId: string, data: CreateTodoInput) {
     const todo = await this.prisma.$transaction(async (tx) => {
       const maxPosition = await tx.todo.aggregate({
         where: { userId },
@@ -26,7 +26,7 @@ export default class TodoService {
 
       return await tx.todo.create({
         data: {
-          text,
+          text: data.text,
           userId,
           position: newPosition,
         },
