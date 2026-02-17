@@ -10,6 +10,7 @@ export const httpLogger = pinoHttp({
   },
 
   customLogLevel: (_req, res, err) => {
+    // error-handler already logs errors with full context, silent here to avoid duplicates
     if (err || res.statusCode >= 400) return 'silent';
     return 'info';
   },
