@@ -6,7 +6,7 @@ import { todoService } from '@/lib/container.js';
 import { requireAuth } from '@/middlewares/authenticate.js';
 import { validate } from '@/middlewares/validate.js';
 
-import { todoParamsSchema, todoSchema } from '@/schemas/todo.schema.js';
+import { todoParamsSchema, todoSchema, updateTodoSchema } from '@/schemas/todo.schema.js';
 
 const route = Router();
 
@@ -27,10 +27,20 @@ export default (app: Router) => {
     res.status(StatusCodes.CREATED).json({ todo });
   });
 
-  route.put('/:id', requireAuth, validate(todoParamsSchema, 'params'), (req, res) => {
-    const { id } = req.params as { id: string };
-    res.json({ message: `Update todo with id ${id}`, data: req.body });
-  });
+  route.patch(
+    '/:id',
+    requireAuth,
+    validate(todoParamsSchema, 'params'),
+    validate(updateTodoSchema),
+    async (req, res) => {
+      const { user } = req as Express.AuthenticatedRequest;
+      const { id } = req.params as { id: string };
+
+      const todo = await todoService.updateTodo(user.id, id, req.body);
+
+      res.status(StatusCodes.OK).json({ todo });
+    },
+  );
 
   route.delete('/:id', requireAuth, validate(todoParamsSchema, 'params'), async (req, res) => {
     const { user } = req as Express.AuthenticatedRequest;

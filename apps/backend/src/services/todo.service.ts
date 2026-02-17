@@ -1,6 +1,7 @@
 import { ForbiddenError, NotFoundError } from '@/errors/index.js';
 
 import type { PrismaClient } from '@/generated/prisma/client.js';
+import type { UpdateTodoInput } from '@/schemas/todo.schema.js';
 
 export default class TodoService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -31,6 +32,27 @@ export default class TodoService {
     });
 
     return todo;
+  }
+
+  async updateTodo(userId: string, todoId: string, data: UpdateTodoInput) {
+    const todo = await this.prisma.todo.findUnique({
+      where: { id: todoId },
+    });
+
+    if (!todo) {
+      throw new NotFoundError();
+    }
+
+    if (todo.userId !== userId) {
+      throw new ForbiddenError();
+    }
+
+    const updatedTodo = await this.prisma.todo.update({
+      where: { id: todoId },
+      data,
+    });
+
+    return updatedTodo;
   }
 
   async deleteTodo(userId: string, todoId: string) {
