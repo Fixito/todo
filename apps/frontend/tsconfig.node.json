@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+
+    /* Override base for bundler mode */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    /* Vite config specific */
+    "types": ["node"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+
+    /* Additional strictness */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["vite.config.ts"]
+}

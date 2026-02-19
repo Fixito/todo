@@ -4,7 +4,7 @@
 
 This is a **pnpm monorepo** with TypeScript backend and frontend. The workspace contains:
 - `apps/backend/` - Express REST API with JWT authentication (signed HTTP-only cookies)
-- `apps/frontend/` - React + TanStack Router (planned)
+- `apps/frontend/` - React + TanStack Router
 - `packages/shared/` - Shared TypeScript types between frontend/backend
 - Prisma generates types to `apps/backend/src/generated/prisma/` (not the default location)
 

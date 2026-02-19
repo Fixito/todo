@@ -25,14 +25,14 @@
   "keywords": [],
   "author": "Thomas ROBERT",
   "license": "ISC",
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937",
   "devDependencies": {
-    "@biomejs/biome": "2.3.8",
-    "@commitlint/cli": "^20.2.0",
-    "@commitlint/config-conventional": "^20.2.0",
-    "@commitlint/types": "^20.2.0",
+    "@biomejs/biome": "2.4.2",
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
+    "@commitlint/types": "^20.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "rimraf": "^6.1.2"
+    "rimraf": "^6.1.3"
   }
 }
