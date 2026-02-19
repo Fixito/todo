@@ -6,8 +6,8 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   return (
-    <div>
+    <main>
       <h1>Todo</h1>
-    </div>
+    </main>
   );
 }

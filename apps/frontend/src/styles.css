@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap");
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-*: initial;
+
+  /* shadcn semantic tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-blue-500: var(--color-blue-500);
+  --color-gray-50: var(--color-gray-50);
+  --color-gray-300: var(--color-gray-300);
+  --color-gray-600: var(--color-gray-600);
+  --color-navy-850: var(--color-navy-850);
+  --color-navy-900: var(--color-navy-900);
+  --color-navy-950: var(--color-navy-950);
+  --color-purple-100: var(--color-purple-100);
+  --color-purple-300: var(--color-purple-300);
+  --color-purple-600: var(--color-purple-600);
+  --color-purple-700: var(--color-purple-700);
+  --color-purple-800: var(--color-purple-800);
+  --color-white: var(--color-white);
+  --color-red: var(--color-red);
+
+  --text-*: initial;
+  --text-base: 1.125rem; /* 18px */
+
+  --font-*: initial;
+  --font-sans: "Josefin Sans", sans-serif;
+
+  --font-regular: 400;
+  --font-bold: 700;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: var(--color-gray-300);
+  --foreground: var(--color-navy-850);
+  --card: var(--color-gray-50);
+  --card-foreground: var(--color-navy-850);
+  --popover: var(--color-gray-50);
+  --popover-foreground: var(--color-navy-850);
+  --primary: var(--color-blue-500);
+  --primary-foreground: var(--color-white);
+  --secondary: var(--color-gray-50);
+  --secondary-foreground: var(--color-gray-600);
+  --muted: var(--color-gray-50);
+  --muted-foreground: var(--color-gray-600);
+  --accent: var(--color-blue-500);
+  --accent-foreground: var(--color-white);
+  --destructive: var(--color-red);
+  --border: var(--color-purple-300);
+  --input: var(--color-purple-300);
+  --ring: var(--color-blue-500);
+
+  /* ===== Design Tokens - Raw Colors ===== */
+  --color-gradient: linear-gradient(90deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+  --color-blue-500: hsl(220, 98%, 61%);
+
+  --color-gray-50: hsl(0, 0%, 98%);
+  --color-gray-300: hsl(233, 11%, 84%);
+
+  --color-gray-600: hsl(236, 9%, 61%);
+  --color-navy-850: hsl(235, 19%, 35%);
+  --color-navy-900: hsl(235, 24%, 19%);
+  --color-navy-950: hsl(235, 21%, 11%);
+
+  --color-purple-100: hsl(236, 33%, 92%);
+  --color-purple-300: hsl(234, 39%, 85%);
+  --color-purple-600: hsl(235, 16%, 43%);
+  --color-purple-700: hsl(233, 14%, 35%);
+  --color-purple-800: hsl(237, 14%, 26%);
+
+  --color-white: hsl(0, 0%, 100%);
+  --color-red: hsl(0, 79%, 63%);
+}
+
+.dark {
+  --background: var(--color-navy-950);
+  --foreground: var(--color-gray-300);
+  --card: var(--color-navy-900);
+  --card-foreground: var(--color-gray-300);
+  --popover: var(--color-navy-900);
+  --popover-foreground: var(--color-gray-300);
+  --primary: var(--color-blue-500);
+  --primary-foreground: var(--color-white);
+  --secondary: var(--color-navy-900);
+  --secondary-foreground: var(--color-purple-700);
+  --muted: var(--color-navy-900);
+  --muted-foreground: var(--color-purple-600);
+  --accent: var(--color-blue-500);
+  --accent-foreground: var(--color-white);
+  --destructive: var(--color-red);
+  --border: var(--color-purple-800);
+  --input: var(--color-purple-800);
+  --ring: var(--color-blue-500);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
